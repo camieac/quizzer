@@ -79,106 +79,103 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
-import Vue from 'vue'
-import moment from 'moment'
-
-
-
+import draggable from "vuedraggable";
+import Vue from "vue";
+import moment from "moment";
 
 export default {
-	name: "create",
-	props: ["quizes"],
-	components: {
-		draggable
-	},
-	data: function(){
-		return {
-			id: 0,
-			name: "",
-			new: true,
-			questions: [],
-			types: [
-				{text: "Local Image", value: "image_local"},
-				{text: "Image Link", value: "image_link"},
-				{text: "Text", value: "text"},
-				{text: "Audio", value: "audio_yt"}
-			],
-			uploadFileName:""
-		};
-	},
-	mounted: function() {
-		if (this.$route.params.hasOwnProperty("id")) {
-			this.id = this.$route.params.id;
-			let quiz = this.quizes[this.id];
-			this.questions = quiz.questions;
-			this.name = quiz.name;
-			this.new = false;
-		} else {
-			this.id = this.quizes.length;
-		}
-	},
-	methods: {
-		append: function(e){
-			this.questions.push({
-				type: "text",
-				answer: "",
-				content: "",
-			});
-			e.preventDefault();
-		},
-		questionString: function(){
-			return JSON.stringify(this.questions, null, 2);
-		},
-		download: function(event){
-			var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.questions));
-			var anchorNode = document.createElement('a');
-			anchorNode.setAttribute("href",     dataStr);
-			anchorNode.setAttribute("download", "questions.json");
-			document.body.appendChild(anchorNode);
-			anchorNode.click();
-			anchorNode.remove();
-			event.preventDefault();
-		},
-		upload: function(files) {
-			console.log(files);
-			if (files.length <= 0) {
-				return false;
-			}
+  name: "create",
+  props: ["quizes"],
+  components: {
+    draggable
+  },
+  data: function() {
+    return {
+      id: 0,
+      name: "",
+      new: true,
+      questions: [],
+      types: [
+        { text: "Local Image", value: "image_local" },
+        { text: "Image Link", value: "image_link" },
+        { text: "Text", value: "text" },
+        { text: "Audio", value: "audio_yt" }
+      ],
+      uploadFileName: ""
+    };
+  },
+  mounted: function() {
+    if (this.$route.params.hasOwnProperty("id")) {
+      this.id = this.$route.params.id;
+      let quiz = this.quizes[this.id];
+      this.questions = quiz.questions;
+      this.name = quiz.name;
+      this.new = false;
+    } else {
+      this.id = this.quizes.length;
+    }
+  },
+  methods: {
+    append: function(e) {
+      this.questions.push({
+        type: "text",
+        answer: "",
+        content: ""
+      });
+      e.preventDefault();
+    },
+    questionString: function() {
+      return JSON.stringify(this.questions, null, 2);
+    },
+    download: function(event) {
+      var dataStr =
+        "data:text/json;charset=utf-8," +
+        encodeURIComponent(JSON.stringify(this.questions));
+      var anchorNode = document.createElement("a");
+      anchorNode.setAttribute("href", dataStr);
+      anchorNode.setAttribute("download", "questions.json");
+      document.body.appendChild(anchorNode);
+      anchorNode.click();
+      anchorNode.remove();
+      event.preventDefault();
+    },
+    upload: function(files) {
+      console.log(files);
+      if (files.length <= 0) {
+        return false;
+      }
 
-			let fr = new FileReader();
+      let fr = new FileReader();
 
-			fr.onload = this.fileLoaded;
-			fr.readAsText(files.item(0));
-		},
-		fileLoaded: function(e) {
-			console.log(e);
-			var result = JSON.parse(e.target.result);
-			var formatted = JSON.stringify(result, null, 2);
-			console.log(formatted);
-			this.questions = result;
-		},
-		save: function() {
-			var updatedQuizes = this.quizes;
+      fr.onload = this.fileLoaded;
+      fr.readAsText(files.item(0));
+    },
+    fileLoaded: function(e) {
+      console.log(e);
+      var result = JSON.parse(e.target.result);
+      var formatted = JSON.stringify(result, null, 2);
+      console.log(formatted);
+      this.questions = result;
+    },
+    save: function() {
+      var updatedQuizes = this.quizes;
 
-			var quiz = {
-				id: this.id,
-				questions: this.questions,
-				name: this.name,
-				played: 0,
-				created: moment().format()
-			};
+      var quiz = {
+        id: this.id,
+        questions: this.questions,
+        name: this.name,
+        played: 0,
+        created: moment().format()
+      };
 
-			if (this.new) {
-				updatedQuizes.push(quiz);
-				this.$emit('update:quizes', updatedQuizes);
-			} else {
-				updatedQuizes[this.id] = quiz;
-				this.$emit('update:quiz', this.id, quiz);
-			}
-
-
-		}
-	}
+      if (this.new) {
+        updatedQuizes.push(quiz);
+        this.$emit("update:quizes", updatedQuizes);
+      } else {
+        updatedQuizes[this.id] = quiz;
+        this.$emit("update:quiz", this.id, quiz);
+      }
+    }
+  }
 };
 </script>

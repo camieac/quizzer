@@ -22,45 +22,42 @@
 
 <script>
 export default {
-	name: 'ViewAll',
-	props: {
-		quizes: {
-			type: Array,
-			default: []
-		}
-	},
-	data: () => ({
-		selected: {},
-	}),
-	mounted: function() {
-
-	},
-	methods: {
-		onSelect (quiz) {
-			this.selected = quiz
-		},
-		clearAll: function() {
-			this.$emit('clear:quizes');
-		},
-		quizesExist: function() {
-			let ret =  (this.quizes.length > 0);
-			return ret;
-
-		},
-		play: function(id){
-			console.log("playing " + id);
-			this.$router.push({ name: 'play', params: { id } })
-		},
-		edit: function(id) {
-			console.log("editing " + id);
-			this.$router.push({ name: 'edit', params: { id } })
-		}
-	}
-}
+  name: "ViewAll",
+  props: {
+    quizes: {
+      type: Array,
+      default: []
+    }
+  },
+  data: () => ({
+    selected: {}
+  }),
+  mounted: function() {},
+  methods: {
+    onSelect(quiz) {
+      this.selected = quiz;
+    },
+    clearAll: function() {
+      this.$emit("clear:quizes");
+    },
+    quizesExist: function() {
+      let ret = this.quizes.length > 0;
+      return ret;
+    },
+    play: function(id) {
+      console.log("playing " + id);
+      this.$router.push({ name: "play", params: { id } });
+    },
+    edit: function(id) {
+      console.log("editing " + id);
+      this.$router.push({ name: "edit", params: { id } });
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .md-table + .md-table {
-    margin-top: 16px
-  }
+.md-table + .md-table {
+  margin-top: 16px;
+}
 </style>

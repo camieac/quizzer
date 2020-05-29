@@ -57,50 +57,50 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { VueperSlides, VueperSlide } from 'vueperslides'
-import 'vueperslides/dist/vueperslides.css'
+import Vue from "vue";
+import { VueperSlides, VueperSlide } from "vueperslides";
+import "vueperslides/dist/vueperslides.css";
 
 export default {
-	name: "present",
-	props: {
-		quizes: {
-			type: Array,
-			default: []
-		}
-	},
-	components: {VueperSlides, VueperSlide},
-	data: function(){
-		return {
-			slides: [],
-			name: "",
-			questions: [],
-			id: 0,
-			colours: ["red", "blue", "green"]
-		};
-	},
-	methods: {},
-	watch: {
-		$route(to, from) {
-			// react to route changes...
-			console.log("Route changed from " + from + " to " + to);
-		}
-	},
-	mounted: function() {
-		let quiz = this.quizes[this.id];
-		console.log("quizes");
-		console.log(this.quizes);
-		console.log("quiz");
-		console.log(quiz);
+  name: "present",
+  props: {
+    quizes: {
+      type: Array,
+      default: []
+    }
+  },
+  components: { VueperSlides, VueperSlide },
+  data: function() {
+    return {
+      slides: [],
+      name: "",
+      questions: [],
+      id: 0,
+      colours: ["red", "blue", "green"]
+    };
+  },
+  methods: {},
+  watch: {
+    $route(to, from) {
+      // react to route changes...
+      console.log("Route changed from " + from + " to " + to);
+    }
+  },
+  mounted: function() {
+    let quiz = this.quizes[this.id];
+    console.log("quizes");
+    console.log(this.quizes);
+    console.log("quiz");
+    console.log(quiz);
 
-		this.name = quiz.name;
-		this.questions = quiz.questions;
-		console.log("questions");
-		console.log(this.questions);
-		// for (const [i, v] of quiz.questions.entries()) {
-		// 	console.log(i, v); // Prints "0 a", "1 b", "2 c"
-		// }
-	}
+    this.name = quiz.name;
+    this.questions = quiz.questions;
+    console.log("questions");
+    console.log(this.questions);
+    // for (const [i, v] of quiz.questions.entries()) {
+    // 	console.log(i, v); // Prints "0 a", "1 b", "2 c"
+    // }
+  }
 };
 </script>
 

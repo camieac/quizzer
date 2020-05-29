@@ -41,49 +41,48 @@
 </template>
 
 <script>
-
-import Vue from 'vue'
+import Vue from "vue";
 
 export default {
-	name: "app",
-	components: {},
-	data: function(){
-		return {
-			quizes: []
-		};
-	},
-	mounted: function() {
-		console.log(localStorage.getItem('quiz_player_quizes'));
-		if (localStorage.getItem('quiz_player_quizes')) {
-			try {
-				this.quizes = JSON.parse(localStorage.getItem('quiz_player_quizes'));
-				console.log("Found quiz data");
-				console.log(typeof(this.quizes));
-				console.log(JSON.stringify(this.quizes));
-			} catch(e) {
-				localStorage.removeItem('quiz_player_quizes');
-			}
-		} else {
-			console.log("No data fround in local storage.");
-		}
-	},
-	watch: {
-		quizes(newQuizes) {
-			localStorage.quiz_player_quizes = JSON.stringify(newQuizes);
-			console.log("Quizes have been saved to local storage");
-		}
-	},
-	methods: {
-		updateQuizes: function(event) {
-			console.log("Quiz has been updated");
-			this.quizes = event;
-		},
-		clearQuizes: function(){
-			this.quizes = [];
-		},
-		updateQuiz: function(id, quiz) {
-			Vue.set(this.quizes, id, quiz);
-		}
-	}
+  name: "app",
+  components: {},
+  data: function() {
+    return {
+      quizes: []
+    };
+  },
+  mounted: function() {
+    console.log(localStorage.getItem("quiz_player_quizes"));
+    if (localStorage.getItem("quiz_player_quizes")) {
+      try {
+        this.quizes = JSON.parse(localStorage.getItem("quiz_player_quizes"));
+        console.log("Found quiz data");
+        console.log(typeof this.quizes);
+        console.log(JSON.stringify(this.quizes));
+      } catch (e) {
+        localStorage.removeItem("quiz_player_quizes");
+      }
+    } else {
+      console.log("No data fround in local storage.");
+    }
+  },
+  watch: {
+    quizes(newQuizes) {
+      localStorage.quiz_player_quizes = JSON.stringify(newQuizes);
+      console.log("Quizes have been saved to local storage");
+    }
+  },
+  methods: {
+    updateQuizes: function(event) {
+      console.log("Quiz has been updated");
+      this.quizes = event;
+    },
+    clearQuizes: function() {
+      this.quizes = [];
+    },
+    updateQuiz: function(id, quiz) {
+      Vue.set(this.quizes, id, quiz);
+    }
+  }
 };
 </script>
