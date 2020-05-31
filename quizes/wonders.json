@@ -1,0 +1,20 @@
+{
+	"name": "Wonders of the World",
+	"questions": [
+		{"id": 1, "type": "text", "question": "Which modern wonder is nicknamed the chunnel?",							"answer": "Channel Tunnel"},
+		{"id": 2, "type": "text", "question": "Which century did all 7 wonders of the modern world come from?",					"answer": "The 20th century (January 1, 1901 to December 31, 2000)"},
+		{"id": 3, "type": "text", "question": "Which New York City building is one of the 7 wonders of the modern world?",			"answer": "Empire State Building"},
+		{"id": 4, "type": "text", "question": "At its completion in 1976, what was the tallest free-standing structure in the world?",		"answer": "CN Tower, Toronto, Canada"},
+		{"id": 5, "type": "text", "question": "Which ancient wonder still exists to this day?",							"answer": "Great Pyramid of Giza"},
+		{"id": 6, "type": "text", "question": "Which Pharaoh commissioned the Great Pyramid of Giza?",						"answer": "Khufu"},
+		{"id": 7, "type": "text", "question": "In which country lies Christ the Redeemer?",							"answer": "Brazil"},
+		{"id": 8, "type": "text", "question": "In which continent lies the Victoria Falls?",							"answer": "Africa"},
+		{"id": 9, "type": "text", "question": "In which country is the Paricutin Volcano located?",						"answer": "Mexico"},
+		{"id": 10, "type": "text", "question": "Which list of wonders is the Paricutin volcano on?",						"answer": "Seven Wonders of the Natural World"},
+		{"id": 11, "type": "text", "question": "Which wonder translates as \"Crown of the Palace\"?",						"answer": "Taj Mahal, India"},
+		{"id": 12, "type": "text", "question": "Which member of New Wonders of the World has arms?",						"answer": "Christ the Redeemer"},
+		{"id": 13, "type": "text", "question": "Which list was Stonehenge on the shortlist for?",						"answer": "New 7 Wonders of the World"},
+		{"id": 14, "type": "text", "question": "Which new wonder of the world is most popular on social media?",				"answer": "Taj Mahal, India"},
+		{"id": 15, "type": "text", "question": "Which ancient wonder, if hadn't been destroyed, would exist today in Babil province, Iraq?",	"answer": "Hanging gardens of babylon"}
+	]
+}

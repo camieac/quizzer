@@ -1,0 +1,38 @@
+{
+	"$id": "https://camieac.github.com/quizzer/quiz.schema.json",
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"title": "Quiz",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string",
+			"description": "Name of quiz."
+		},
+		"questions": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [ "type", "veggieLike" ],
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": ["text", "audio_yt", "image_link"],
+						"description": "Type of quiz."
+					},
+					"question": {
+						"type": "string",
+						"description": "Quiz question text."
+					},
+					"answer": {
+						"type": "string",
+						"description": "Quiz answer text."
+					}
+				}
+			}
+		},
+		"created": {
+			"description": "Creation time of quiz.",
+			"type": "date-time"
+		}
+	}
+}
