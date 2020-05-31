@@ -15,21 +15,23 @@ import Home from "./components/Home";
 import Create from "./components/Create";
 import Play from "./components/Play";
 import ViewAll from "./components/ViewAll";
+import ViewPublic from "./components/ViewPublic";
 import VueRouter from "vue-router";
 
 const router = new VueRouter({
-  mode: "history",
-  base: __dirname,
-  routes: [
-    { path: "/", component: Home },
-    { path: "/create", component: Create },
-    { path: "/play/:id", name: "play", component: Play },
-    { path: "/edit/:id", name: "edit", component: Create },
-    { path: "/viewall", component: ViewAll }
-  ]
+	mode: "history",
+	base: __dirname,
+	routes: [
+		{ path: "/", component: Home },
+		{ path: "/create", component: Create },
+		{ path: "/play/:id", name: "play", component: Play },
+		{ path: "/edit/:id", name: "edit", component: Create },
+		{ path: "/viewall", component: ViewAll },
+		{ path: "/viewpublic", component: ViewPublic }
+	]
 });
 
 new Vue({
-  router,
-  render: h => h(App)
+	router,
+	render: h => h(App)
 }).$mount("#app");

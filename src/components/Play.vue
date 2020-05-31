@@ -1,6 +1,6 @@
 <template>
-<div>
-	<p>{{name}}</p>
+<div v-if="ready()">
+	<p>{{getName()}}</p>
   <!-- <div class="card-expansion">
 	  <p>Showing quiz {{$route.params.id}}</p>
     <md-card>
@@ -42,7 +42,7 @@
 		</template> -->
 
 		<vueper-slide
-			v-for="(question, i) in questions"
+			v-for="(question, i) in getQuestions()"
 			:key="i"
 			:title="question.content"
 			:style="'background-color: ' + colours[i % colours.length]"
@@ -62,45 +62,60 @@ import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 
 export default {
-  name: "present",
-  props: {
-    quizes: {
-      type: Array,
-      default: []
-    }
-  },
-  components: { VueperSlides, VueperSlide },
-  data: function() {
-    return {
-      slides: [],
-      name: "",
-      questions: [],
-      id: 0,
-      colours: ["red", "blue", "green"]
-    };
-  },
-  methods: {},
-  watch: {
-    $route(to, from) {
-      // react to route changes...
-      console.log("Route changed from " + from + " to " + to);
-    }
-  },
-  mounted: function() {
-    let quiz = this.quizes[this.id];
-    console.log("quizes");
-    console.log(this.quizes);
-    console.log("quiz");
-    console.log(quiz);
-
-    this.name = quiz.name;
-    this.questions = quiz.questions;
-    console.log("questions");
-    console.log(this.questions);
-    // for (const [i, v] of quiz.questions.entries()) {
-    // 	console.log(i, v); // Prints "0 a", "1 b", "2 c"
-    // }
-  }
+	name: "present",
+	props: {
+		quizes: {
+			type: Array,
+			default: []
+		},
+		publicQuizes: {
+			type: Array,
+			default: []
+		}
+	},
+	components: { VueperSlides, VueperSlide },
+	data: function() {
+		return {
+			slides: [],
+			id: 0,
+			isPublic: false,
+			colours: ["red", "blue", "green"]
+		};
+	},
+	methods: {
+		getQuiz: function() {
+			if (this.isPublic) {
+				return this.publicQuizes[this.id];
+			} else {
+				return this.quizes[this.id];
+			}
+		},
+		getName: function() {
+			return this.getQuiz().name;
+		},
+		getQuestions: function() {
+			return this.getQuiz().questions;
+		},
+		getPublic: function() {
+			return this.$route.query.pub == "true";
+		},
+		ready: function() {
+			if (this.isPublic) {
+				return this.publicQuizes.length;
+			} else {
+				return this.quizes.length;
+			}
+		}
+	},
+	watch: {
+		$route(to, from) {
+			// react to route changes...
+			console.log("Route changed from " + from + " to " + to);
+		}
+	},
+	mounted: function() {
+		this.isPublic = this.getPublic();
+	}
 };
 </script>
 
