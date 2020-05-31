@@ -12,7 +12,7 @@
 			"type": "array",
 			"items": {
 				"type": "object",
-				"required": [ "type", "veggieLike" ],
+				"required": [ "type", "question" ],
 				"properties": {
 					"type": {
 						"type": "string",
@@ -32,7 +32,8 @@
 		},
 		"created": {
 			"description": "Creation time of quiz.",
-			"type": "date-time"
+			"type": "string",
+			"format": "date-time"
 		}
 	}
 }
