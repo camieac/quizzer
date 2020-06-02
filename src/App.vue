@@ -49,7 +49,10 @@
 
 <script>
 import Vue from "vue";
-import JsonSchema from "@hyperjump/json-schema"
+import JsonSchema from "@hyperjump/json-schema";
+import Ajv from "ajv";
+
+var ajv = new Ajv();
 
 export default {
 	name: "app",
@@ -63,13 +66,16 @@ export default {
 			duration: 4000,
 			isInfinity: false,
 			publicQuizFiles: [
-				"./quizes/wonders.json"
+				"./quizes/wonders.json",
+				"./quizes/movie_soundtracks.json",
 			],
 			publicQuizes: [],
-			publicPath: process.env.BASE_URL
+			publicPath: process.env.BASE_URL,
+			schema: "",
+			validator: null
 		};
 	},
-	mounted: function() {
+	mounted: async function() {
 		console.log(localStorage.getItem("quiz_player_quizes"));
 		if (localStorage.getItem("quiz_player_quizes")) {
 			try {
@@ -84,6 +90,8 @@ export default {
 			console.log("No data fround in local storage.");
 		}
 		console.log("Test");
+		this.schema = await this.loadQuizSchema();
+		this.validate = ajv.compile(this.schema);
 		this.fetchAllPublic();
 
 	},
@@ -95,30 +103,42 @@ export default {
 	},
 	methods: {
 		fetchAllPublic: async function() {
-			const schemaJson = {
-				"$schema": "https://json-schema.org/draft/2019-09/schema",
-				"$id": "http://example.com/schemas/string",
-				"type": "string"
-			};
-			let schema = await this.loadQuizSchema();
-			let isValidQuiz = await JsonSchema.validate(schema);
-			let output = isValidQuiz("foo");
+
+			// JsonSchema.add(this.schema, "https://camieac.github.com/quizzer/quiz.schema.json", "https://json-schema.org/draft/2019-09/schema");
+			// console.log(schema);
+
+			// let output = isValidQuiz("foo");
 
 			// const output = await JsonSchema.validate(schema, "foo");
-			if (output.valid) {
-				console.log("Instance is valid :-)");
-			} else {
-				console.log("Instance is invalid :-(");
-			}
+			// if (output.valid) {
+			// 	console.log("Instance is valid :-)");
+			// } else {
+			// 	console.log("Instance is invalid :-(");
+			// }
 			// console.log("process.env");
 			// console.log(process.env);
 			// const schema = await JsonSchema.get("http:// " + this.publicPath + "quiz.schema.json");
 			// const schema = await JsonSchema.get(require("../public/quiz.schema.json").default);
 			// const schema = await JsonSchema.get("http://" + this.publicPath + "quiz.schema.json");
 
-			this.publicQuizFiles.forEach((url, id) => {
+			this.publicQuizFiles.forEach(async (url, id) => {
 				console.log("Loading quiz data");
-				this.fetchQuizData(url, id);
+				let data = await this.fetchQuizData(url, id);
+				console.log("validating");
+				console.log(this.schema);
+				console.log(data);
+
+
+				 // options can be passed, e.g. {allErrors: true}
+
+				var valid = this.validate(data);
+				// const output = await JsonSchema.validate(this.schema, data, JsonSchema.BASIC);
+				if (valid) {
+					this.publicQuizes.push(data);
+				} else {
+					console.log("Invalid quiz");
+					console.log(this.validate.errors);
+				}
 			});
 		},
 		loadQuizSchema: function() {
@@ -126,26 +146,26 @@ export default {
 				fetch("./quiz.schema.json")
 					.then(res => res.json())
 					.then((json) => {
-						console.log(json);
 						resolve(json);
 					})
 					.catch(err => {
 						reject(err);
 					});
 			});
-
 		},
 		fetchQuizData: function(url, id) {
-			fetch(url)
-				.then(res => res.json())
-				.then((quizJson) => {
-					quizJson.id = id;
-					this.publicQuizes.push(quizJson);
-					console.log("Public quiz has been loaded");
-				})
-				.catch(err => {
-					throw err;
-				});
+			return new Promise((resolve, reject) => {
+				fetch(url)
+					.then(res => res.json())
+					.then((quizJson) => {
+						quizJson.id = id;
+						resolve(quizJson);
+					})
+					.catch(err => {
+						reject(err);
+					});
+			});
+
 		},
 		updateQuizes: function(event) {
 			console.log("Quiz has been updated");

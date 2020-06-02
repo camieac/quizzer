@@ -12,7 +12,8 @@
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
-		"@hyperjump/json-schema": "^0.8.2",
+		"@hyperjump/json-schema": "=0.8.0",
+		"ajv": "^6.12.2",
 		"font-awesome": "^4.7.0",
 		"moment": "^2.26.0",
 		"vue": "^2.5.17",

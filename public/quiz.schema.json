@@ -1,8 +1,9 @@
 {
 	"$id": "https://camieac.github.com/quizzer/quiz.schema.json",
-	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"$schema": "http://json-schema.org/draft-07/schema",
 	"title": "Quiz",
 	"type": "object",
+	"required": ["questions"],
 	"properties": {
 		"name": {
 			"type": "string",
@@ -13,7 +14,7 @@
 			"minItems": 1,
 			"items": {
 				"type": "object",
-				"required": [ "type", "question" ],
+				"required": [ "type", "answer", "id" ],
 				"properties": {
 					"type": {
 						"type": "string",
@@ -27,7 +28,31 @@
 					"answer": {
 						"type": "string",
 						"description": "Quiz answer text."
+					},
+					"start": {
+						"type": "number",
+						"description": "Start time of clip."
+					},
+					"stop": {
+						"type": "number",
+						"description": "Stop time of clip."
+					},
+					"src": {
+						"type": "string",
+						"format": "uri"
 					}
+				},
+				"if": {
+					"properties": {"type": {"const": "text"}}
+				},
+				"then": {
+					"required": ["question"]
+				},
+				"if": {
+					"properties": {"type": {"const": "audio_yt"}}
+				},
+				"then": {
+					"required": ["src" , "start", "stop"]
 				}
 			}
 		},
